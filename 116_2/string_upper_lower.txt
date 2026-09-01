@@ -1,0 +1,73 @@
+.model small
+.stack 100h
+
+.data
+    str1 db 'Enter a character: $'
+           
+
+.code
+main proc
+    
+    mov ax, @data
+    mov ds, ax
+    
+    mov ah, 09h
+    lea dx, str1      ;Print the string
+    int 21h
+    
+    mov ah, 1         ;Take character input
+    int 21h
+    mov bl,al 
+    add bl, 32
+    
+    mov dl, 10        ;Newline apply
+    mov ah, 2
+    int 21h
+    
+    mov dl, 13
+    mov ah, 2
+    int 21h
+   
+   
+    mov dl, bl          ;print the lower case character
+    mov ah,2
+    int 21h
+    
+    mov dl, 10          ;Newline
+    mov ah, 2
+    int 21h
+    
+    mov dl, 13
+    mov ah, 2
+    int 21h
+ 
+    
+    mov ah, 09h            ;Print the String
+    lea dx, str1
+    int 21h
+    
+    mov ah, 1
+    int 21h
+    
+    mov bl,al              ; Upper case conversion
+    sub bl,32 
+    
+    mov dl, 10             ;Newline
+    mov ah, 2
+    int 21h
+    
+    mov dl, 13
+    mov ah, 2
+    int 21h
+
+    
+    mov dl, bl              ;Print the character
+    mov ah,2
+    int 21h
+    
+    
+    main endp
+
+
+
+end main

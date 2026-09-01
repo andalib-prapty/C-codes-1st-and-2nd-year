@@ -1,0 +1,21 @@
+l1:
+mov ah, 1
+int 21h
+cmp al, 0Dh
+je L3
+AND AL, 0Fh
+SHL BX, 1
+OR BL, AL
+JMP L1
+
+L2:
+XOR BX, BX/ mov bx, 0
+JC L3
+MOV DL, 30H
+MOV AH, 2
+INT 21H
+
+L3:
+MOV DL, 31H
+MOV AH, 2
+INT 21H

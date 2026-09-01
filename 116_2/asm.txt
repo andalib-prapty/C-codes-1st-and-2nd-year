@@ -1,0 +1,17 @@
+mov ax, 9
+L:
+mov dx, n
+dec dx
+mov bl,2
+L1:
+mov ax, n
+div bl
+cmp ah,0
+je l2
+inc bl
+cmp bl, dl
+jl L1
+jmp L3
+
+L2: print composite
+L3: print prime

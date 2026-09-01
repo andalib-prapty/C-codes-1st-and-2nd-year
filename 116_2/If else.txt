@@ -1,0 +1,48 @@
+.model small
+.stack 100h
+
+.data
+    prompt db 'Enter a character: $'
+    newline db 0Dh, 0Ah, '$'        ; Carriage return and newline for output
+
+.code
+main:
+    ; Initialize data segment
+    mov ax, @data
+    mov ds, ax
+
+    ; Print prompt
+    mov ah, 09h              ; DOS interrupt for printing a string
+    lea dx, prompt           ; Load address of the prompt
+    int 21h                  ; Call DOS interrupt
+
+    ; Read a character from keyboard
+    mov ah, 01h              ; DOS interrupt for reading a character
+    int 21h                  ; Call DOS interrupt
+    mov bl, al               ; Store the input character in BL register
+
+    ; Check if character is uppercase (A-Z)
+    cmp al, 'A'              ; Compare input with 'A'
+    jl not_uppercase         ; If input < 'A', it’s not an uppercase letter
+    cmp al, 'Z'              ; Compare input with 'Z'
+    jg not_uppercase         ; If input > 'Z', it’s not an uppercase letter
+
+    ; Convert to lowercase (A-Z to a-z)
+    add al, 20h              ; Add 32 (20h) to convert uppercase to lowercase
+
+not_uppercase:
+    ; Print the converted or unmodified character
+    mov ah, 02h              ; DOS interrupt for printing a character
+    mov dl, al               ; Load the character into DL for output
+    int 21h                  ; Call DOS interrupt
+
+    ; Print newline for clarity
+    mov ah, 09h              ; DOS interrupt for printing a string
+    lea dx, newline          ; Load address of newline string
+    int 21h                  ; Call DOS interrupt
+
+    ; Exit program
+    mov ah, 4Ch              ; DOS interrupt for program termination
+    int 21h                  ; Call DOS interrupt
+
+end main
